@@ -11,6 +11,7 @@ import os
 
 from config import config
 from rag_system import RAGSystem
+from models import Source
 
 # Initialize FastAPI app
 app = FastAPI(title="Course Materials RAG System", root_path="")
@@ -43,7 +44,7 @@ class QueryRequest(BaseModel):
 class QueryResponse(BaseModel):
     """Response model for course queries"""
     answer: str
-    sources: List[str]
+    sources: List[Source]
     session_id: str
 
 class CourseStats(BaseModel):
@@ -84,6 +85,12 @@ async def get_course_stats():
         )
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+@app.delete("/api/session/{session_id}")
+async def delete_session(session_id: str):
+    """Delete a conversation session"""
+    deleted = rag_system.session_manager.delete_session(session_id)
+    return {"deleted": deleted, "session_id": session_id}
 
 @app.on_event("startup")
 async def startup_event():

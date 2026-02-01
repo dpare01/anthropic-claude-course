@@ -14,6 +14,8 @@ cd backend && uv run uvicorn app:app --reload --port 8000
 ```
 Or use the shell script: `./run.sh`
 
+**Note:** Do not run the server automatically - the user will start it themselves.
+
 ### Install dependencies
 ```bash
 uv sync
