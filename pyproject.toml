@@ -19,4 +19,19 @@ dev = [
     "pytest>=8.0.0",
     "pytest-mock>=3.12.0",
     "httpx>=0.27.0",
+    "black>=24.0.0",
 ]
+
+[tool.black]
+line-length = 88
+target-version = ["py313"]
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+    \.git
+    | \.venv
+    | venv
+    | __pycache__
+    | chroma_db
+)/
+'''
